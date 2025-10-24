@@ -1,0 +1,24 @@
+# Project Context: Regex Search Script
+
+- **Objective:** A cross-platform (Windows/Linux) Python script for recursive regex text search in a given directory.
+- **Core Functionality:**
+  - Takes 3 CLI arguments: `directory_path` (required), `search_regex` (required), `exclude_files_regex` (optional).
+  - Recursively scans the directory.
+  - Filters files by a hardcoded whitelist of extensions: `java`, `txt`, `sql`, `yaml`, `properties`, `md`, `gradle`, `py`.
+  - Skips files matching the exclusion regex.
+  - Handles multi-line regex matches.
+- **Output:**
+  - **Console:** Logs progress (file being scanned, matches found) and errors. Reports completion status.
+  - **JSON File:** Generates a JSON report if matches are found or errors occur.
+    - **Name:** `YYYYMMDD_HHmm_result_<first_15_safe_chars_of_regex>.json`.
+    - **Structure:** Contains two top-level keys:
+      - `results`: A dictionary mapping absolute file paths to a list of found string matches.
+      - `errors`: A list of objects, each detailing an error (e.g., access denied, encoding issue) with its path and reason.
+- **Key Technical Details:**
+  - **No multithreading.** The script is single-threaded.
+  - **Platform-dependent encoding detection:**
+    - Windows: Tries `windows-1251`, then `cp866`, then `utf-8`.
+    - Linux/Other: Tries `utf-8`.
+  - **Error Handling:**
+    - Fatal error on invalid start directory.
+    - Non-fatal errors (inaccessible sub-path, encoding errors) are logged to the console and the JSON report, and the script continues.

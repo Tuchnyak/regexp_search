@@ -4,7 +4,7 @@ This document outlines a step-by-step plan for creating the regex search script.
 
 ## Phase 1: Project Skeleton and Argument Parsing
 
-- [ ] **Step 1.1: Initial Setup and CLI Arguments**
+- [x] **Step 1.1: Initial Setup and CLI Arguments**
   - Create the main script file.
   - Implement command-line argument parsing for the three required inputs.
   - Add basic validation for the existence of the main directory path.
@@ -23,7 +23,7 @@ For now, in the main execution block, simply print the parsed arguments to confi
 
 ## Phase 2: File Discovery and Filtering
 
-- [ ] **Step 2.1: Recursive File Traversal**
+- [x] **Step 2.1: Recursive File Traversal**
   - Build upon the previous step to walk the directory tree.
   - Implement the file extension whitelist.
   - Implement the file name exclusion logic.

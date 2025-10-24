@@ -15,13 +15,28 @@ def main():
         print(f"Error: The specified path '{args.directory}' is not a valid directory.", file=sys.stderr)
         sys.exit(1)
 
+    results = {}
+    errors = []
+
     print("Searching for files...")
     for file_path in find_files(args.directory, args.exclude):
         result = read_file_content(file_path)
         if result["error"]:
-            print(f"Failed to read {file_path}: {result['error']}")
+            errors.append({"path": file_path, "reason": result["error"]})
         else:
-            print(f"Successfully read {file_path}")
+            try:
+                matches = re.findall(args.regex, result["content"], re.MULTILINE)
+                if matches:
+                    results[file_path] = matches
+            except re.error as e:
+                print(f"Error: Invalid regex pattern: {e}", file=sys.stderr)
+                sys.exit(1)
+    
+    print("\n--- Results ---")
+    print(results)
+    print("\n--- Errors ---")
+    print(errors)
+
 
 def read_file_content(file_path):
     """

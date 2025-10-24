@@ -64,7 +64,7 @@ Update the main loop to call `read_file_content()` for each file path found. For
 
 ## Phase 4: Regex Searching and Result Aggregation
 
-- [ ] **Step 4.1: Perform Regex Search and Store Results**
+- [x] **Step 4.1: Perform Regex Search and Store Results**
   - Integrate the `re` module to search file content.
   - Store successful matches in a dictionary.
   - Store any errors encountered during file processing in a list.

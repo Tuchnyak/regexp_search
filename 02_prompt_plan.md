@@ -43,7 +43,7 @@ In the main execution block, call this new function with the parsed arguments an
 
 ## Phase 3: File Content Reading and OS-Specific Encodings
 
-- [ ] **Step 3.1: Implement Encoding-Aware File Reading**
+- [x] **Step 3.1: Implement Encoding-Aware File Reading**
   - Detect the host operating system.
   - Create a function that attempts to read a file's content using a sequence of encodings based on the OS.
   - Handle potential `PermissionError` and `UnicodeDecodeError` gracefully.

@@ -17,7 +17,35 @@ def main():
 
     print("Searching for files...")
     for file_path in find_files(args.directory, args.exclude):
-        print(f"Found file: {file_path}")
+        result = read_file_content(file_path)
+        if result["error"]:
+            print(f"Failed to read {file_path}: {result['error']}")
+        else:
+            print(f"Successfully read {file_path}")
+
+def read_file_content(file_path):
+    """
+    Reads a file's content, trying different encodings based on the OS.
+    Returns a dictionary with content or an error message.
+    """
+    if sys.platform == "win32":
+        encodings = ['windows-1251', 'cp866', 'utf-8']
+    else:
+        encodings = ['utf-8']
+
+    for encoding in encodings:
+        try:
+            with open(file_path, 'r', encoding=encoding) as f:
+                return {"content": f.read(), "error": None}
+        except UnicodeDecodeError:
+            continue
+        except PermissionError:
+            return {"content": None, "error": "Permission denied"}
+        except Exception as e:
+            return {"content": None, "error": f"An unexpected error occurred: {e}"}
+    
+    return {"content": None, "error": "Failed to decode with available encodings"}
+
 
 def find_files(directory, exclude_regex):
     """

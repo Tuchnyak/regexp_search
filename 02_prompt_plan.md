@@ -85,7 +85,7 @@ After the loop finishes, print the `results` dictionary and the `errors` list to
 
 ## Phase 5: JSON Output Generation
 
-- [ ] **Step 5.1: Generate Filename and Write JSON Report**
+- [x] **Step 5.1: Generate Filename and Write JSON Report**
   - Create the logic for generating the timestamped and regex-based filename.
   - Write the aggregated results and errors to a JSON file in the specified format.
   - Handle the case where no matches are found and no errors occurred.

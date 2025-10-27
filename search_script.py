@@ -56,7 +56,12 @@ def main():
     output_path = os.path.join(args.directory, output_filename)
 
     # Create output data
-    output_data = {"results": results, "errors": errors}
+    output_data = {
+        "search_regex": args.regex,
+        "exclude_regex": args.exclude,
+        "results": results,
+        "errors": errors,
+    }
 
     # Write to JSON file
     try:

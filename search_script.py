@@ -36,10 +36,25 @@ def main():
             print(f"Ошибка при чтении файла: {result['error']}")
         else:
             try:
-                matches = re.findall(args.regex, result["content"], re.MULTILINE)
-                if matches:
-                    results[file_path] = matches
-                    print(f"Найдено совпадений: {len(matches)}")
+                content = result["content"]
+                lines = content.splitlines()
+                found_lines = set()
+
+                for match in re.finditer(args.regex, content, re.MULTILINE):
+                    start_char, end_char = match.span()
+                    
+                    # Find the line number for the start and end of the match
+                    start_line_num = content.count('\n', 0, start_char)
+                    end_line_num = content.count('\n', 0, end_char)
+                    
+                    # Add all lines that are part of the match
+                    for i in range(start_line_num, end_line_num + 1):
+                        if i < len(lines):
+                            found_lines.add(lines[i])
+
+                if found_lines:
+                    results[file_path] = sorted(list(found_lines), key=lambda x: lines.index(x))
+                    print(f"Найдено совпадений: {len(found_lines)}")
             except re.error as e:
                 print(f"Error: Invalid regex pattern: {e}", file=sys.stderr)
                 sys.exit(1)

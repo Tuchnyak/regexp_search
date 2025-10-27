@@ -105,3 +105,35 @@ Finally, add the specified console logging inside the main loop:
 - Before reading a file: `print(f"Просмотр файла: {file_path}...")`
 - After finding matches in a file: `print(f"Найдено совпадений: {len(matches)}")`
 ```
+
+## Phase 6: Refinements and Feature Enhancements
+
+- [x] **Step 6.1: Add Metadata to JSON Report**
+  - Enhance the JSON report by including the search parameters.
+
+```text
+Modify the `search_script.py` to enhance the JSON report.
+The root JSON object should be updated to include two new keys at the top:
+1. `search_regex`: The value of the `regex` argument.
+2. `exclude_regex`: The value of the `exclude` argument (this should be `None` or `null` if the argument was not provided).
+
+The final structure should look like this:
+{
+  "search_regex": "import\\s+java\\.util\\.\\w+",
+  "exclude_regex": null,
+  "results": { ... },
+  "errors": [ ... ]
+}
+```
+
+- [x] **Step 6.2: Improve Match Context**
+  - Change the search logic to capture and display the full line(s) where a match is found, instead of just the matched text.
+
+```text
+Refactor the search logic in `search_script.py` to provide better context for matches.
+1. In the main loop, instead of `re.findall()`, use `re.finditer()` to get iterator of match objects. This provides more details about each match, including its start and end positions.
+2. For each match object, find the start and end of the line(s) it spans.
+   - You can do this by searching backwards from `match.start()` for a newline character (`\n`) and forwards from `match.end()` for a newline character.
+3. The value in the `results` dictionary for each file should now be a list of these full-line strings.
+4. Ensure that if multiple matches occur on the same line, that line is only added to the results once. A `set` can be useful here to avoid duplicates before converting back to a list.
+```

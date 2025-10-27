@@ -11,8 +11,10 @@
   - **Console:** Logs progress (file being scanned, matches found) and errors. Reports completion status.
   - **JSON File:** Generates a JSON report if matches are found or errors occur.
     - **Name:** `YYYYMMDD_HHmm_result_<first_15_safe_chars_of_regex>.json`.
-    - **Structure:** Contains two top-level keys:
-      - `results`: A dictionary mapping absolute file paths to a list of found string matches.
+    - **Structure:** The JSON root object contains the following keys:
+      - `search_regex`: The full search pattern used.
+      - `exclude_regex`: The exclusion pattern used (or `null`).
+      - `results`: A dictionary mapping absolute file paths to a list of full line(s) where matches were found.
       - `errors`: A list of objects, each detailing an error (e.g., access denied, encoding issue) with its path and reason.
 - **Key Technical Details:**
   - **No multithreading.** The script is single-threaded.
